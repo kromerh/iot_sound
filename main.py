@@ -9,7 +9,7 @@ GPIO.setup(channel, GPIO.IN)
 
 def callback(channel):
     if GPIO.input(channel):
-        print(GPIO.input(channel)
+        print(GPIO.input(channel))
         print("Sound Detected!")
     else:
         print("Sound Detected!")
