@@ -1,18 +1,22 @@
-import RPi.GPIO as GPIO  
-import time  
-  
-GPIO.setmode(GPIO.BCM)  
-input_pin = 17  
-GPIO.setup(input_pin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)  
-  
-try:  
-    while True:  
-        pin_state = GPIO.input(input_pin)  
-        print("Pin state:", pin_state)  
-        time.sleep(1)  
-  
-except KeyboardInterrupt:  
-    print("Stopping...")  
-  
-finally:  
-    GPIO.cleanup()  
+#!/usr/bin/python
+import RPi.GPIO as GPIO
+import time
+
+#GPIO SETUP
+channel = 17
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(channel, GPIO.IN)
+
+def callback(channel):
+    if GPIO.input(channel):
+        print("True")
+    else:
+        print("False")
+
+GPIO.add_event_detect(channel, GPIO.BOTH, bouncetime=300)  # let us know when the pin goes HIGH or LOW
+GPIO.add_event_callback(channel, callback)  # assign function to GPIO PIN, Run function on change
+
+# infinite loop
+while True:
+    print(GPIO.input(channel))
+    time.sleep(0.5)
