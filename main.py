@@ -1,7 +1,11 @@
 #!/usr/bin/python
 import RPi.GPIO as GPIO
 import time
+import logging
 
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+)
 # GPIO SETUP
 channel = 17
 GPIO.setmode(GPIO.BCM)
@@ -11,9 +15,9 @@ GPIO.setup(channel, GPIO.IN)
 def callback(channel: int) -> None:
     """Function to print message when sound detected (input pin changes)."""
     if GPIO.input(channel):
-        print("Sound detected!")
+        logging.info("Sound detected!")
     else:
-        print("Sound detected!")
+        logging.info("Sound detected!")
 
 
 GPIO.add_event_detect(
@@ -25,5 +29,5 @@ GPIO.add_event_callback(
 
 # infinite loop
 while True:
-    print(GPIO.input(channel))
-    time.sleep(0.5)
+    # print(GPIO.input(channel))
+    time.sleep(0.1)
